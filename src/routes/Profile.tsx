@@ -60,18 +60,34 @@ const Profile: React.FC<IProfileProps> = ({ refreshUser, userObj }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Display Name" value={newDisplayName} onChange={onChangeDisplayName} />
-        <input type="submit" value="Update Profile" />
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
+        <input
+          type="text"
+          autoFocus
+          placeholder="Display Name"
+          value={newDisplayName}
+          onChange={onChangeDisplayName}
+          className="formInput"
+        />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
-      <button onClick={onClickLogOut}>Log Out</button>
-      <div>
+      <span className="formBtn cancelBtn logOut" onClick={onClickLogOut}>
+        Log Out
+      </span>
+      <div style={{ marginTop: '20px' }}>
         {nweets.map((nweet: NweetObj) => (
           <Nweet key={nweet.id} nweet={nweet} isOwner={nweet.userID === userObj.uid} />
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

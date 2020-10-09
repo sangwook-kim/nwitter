@@ -27,9 +27,9 @@ const Home: React.FC<HomeProps> = ({ userObj }) => {
   }, []);
 
   return (
-    <div>
+    <div className="container">
       <NweetFactory userObj={userObj} />
-      <div>
+      <div style={{ marginTop: 30 }}>
         {nweets.map((nweet: NweetObj) => (
           <Nweet key={nweet.id} nweet={nweet} isOwner={nweet.userID === userObj.uid} />
         ))}

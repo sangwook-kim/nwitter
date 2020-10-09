@@ -42,8 +42,16 @@ const AuthForm: React.FC = () => {
 
   return (
     <>
-      <form onSubmit={onSubmit}>
-        <input type="text" name={inputNames.email} placeholder="Email" required onChange={onChange} value={email} />
+      <form onSubmit={onSubmit} className="container">
+        <input
+          type="email"
+          name={inputNames.email}
+          placeholder="Email"
+          required
+          onChange={onChange}
+          value={email}
+          className="authInput"
+        />
         <input
           type="password"
           name={inputNames.password}
@@ -51,11 +59,14 @@ const AuthForm: React.FC = () => {
           required
           onChange={onChange}
           value={password}
+          className="authInput"
         />
-        <input type="submit" value={newAccount ? 'Create Account' : 'Log In'} />
-        {error ? `${error.message}` : null}
+        <input type="submit" className="authInput authSubmit" value={newAccount ? 'Create Account' : 'Log In'} />
+        {error && <span className="authError">{error.message}</span>}
       </form>
-      <span onClick={toggleAccount}>{newAccount ? 'Sign in' : 'Create New Account'}</span>
+      <span className="authSwitch" onClick={toggleAccount}>
+        {newAccount ? 'Sign in' : 'Create New Account'}
+      </span>
     </>
   );
 };

@@ -1,6 +1,8 @@
 import { v4 as uuid } from 'uuid';
 import { storageService, dbService } from '@/fbase';
 import React, { FormEvent, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface NweetFactoryProps {
   userObj: UserObj;
@@ -12,6 +14,9 @@ const NweetFactory: React.FC<NweetFactoryProps> = ({ userObj }) => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (nweet === '') {
+      return;
+    }
 
     let uploadedFileURL = '';
     if (imgFileData) {
@@ -64,14 +69,36 @@ const NweetFactory: React.FC<NweetFactoryProps> = ({ userObj }) => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" placeholder="What's in your mind?" maxLength={320} value={nweet} onChange={onChange} />
-      <input type="file" accept="image/*" onChange={onChangeFile} />
-      <input type="submit" value="Nweet" />
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factoryInput__container">
+        <input
+          className="factoryInput__input"
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={320}
+          value={nweet}
+          onChange={onChange}
+        />
+        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+      <label htmlFor="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
+      <input id="attach-file" type="file" accept="image/*" onChange={onChangeFile} style={{ opacity: 0 }} />
       {imgFileData && (
-        <div>
-          <img alt="user uploading file" src={imgFileData} width="50px" height="50px" />
-          <button onClick={onClickClearPhoto}>clear</button>
+        <div className="factoryForm__attachment">
+          <img
+            alt="user uploading file"
+            src={imgFileData}
+            style={{
+              backgroundImage: imgFileData,
+            }}
+          />
+          <div className="factoryForm__clear" onClick={onClickClearPhoto}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
         </div>
       )}
     </form>
